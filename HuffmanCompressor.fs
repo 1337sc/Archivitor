@@ -137,8 +137,9 @@ type HuffmanCompressor() =
                 let code = codesTable[b]
                 resultBits.Append(code) |> ignore
 
-            resultBits.Append(String.Join(String.Empty, [|for i in 1..(resultBits.Length % 8) -> '0'|])) |> ignore // 8 bits in each byte
-
+            let trailingBitsCount = 8 - (resultBits.Length % 8)
+            resultBits.Append(String.Join(String.Empty, [|for i in 1..trailingBitsCount -> '0'|])) |> ignore // 8 bits in each byte
+            
             let resultBitsString = resultBits.ToString()
             
             use file = File.Create(resultPath)
@@ -147,6 +148,7 @@ type HuffmanCompressor() =
                 let curByte = Convert.ToByte(substring, 2)
                 
                 file.WriteByte(curByte)
+            file.WriteByte(trailingBitsCount |> byte)
             ()
 
         member this.Decompress path resultPath =
@@ -161,7 +163,9 @@ type HuffmanCompressor() =
 
             let table = buildCodesTable(tree)
 
-            let message = model[spentOnTree.Value..]
+            let trailingBitsCount = content.Last() |> int32
+
+            let message = model[spentOnTree.Value..model.Length - 1 - 8 - trailingBitsCount]
             use file = File.Create(resultPath)
 
             let mutable pStart = 0
