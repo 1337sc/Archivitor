@@ -6,8 +6,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Include="Tree.fs" />
+		<Compile Include="Constants.fs" />
+		<Compile Include="FileWriter.fs" />
 		<Compile Include="Compressor.fs" />
+		<Compile Include="RLECompressor.fs" />
+		<Compile Include="Tree.fs" />
+		<Compile Include="LZWCompressor.fs" />
 		<Compile Include="HuffmanCompressor.fs" />
 		<Compile Include="Program.fs" />
 	</ItemGroup>
