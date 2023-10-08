@@ -3,14 +3,14 @@ open LZWCompressor
 open RLECompressor
 open Compressor
 
-let compressor = new RLECompressor()
+let compressor = new HuffmanCompressor(isAdaptive=false)
 
 ((compressor :> ICompressor).Compress 
-    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\input\Autumncame.mp3" 
-    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\output\Autumncame.mp3.rle")
+    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\input\vid.mp4" 
+    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\output\vid.mp4.huff")
 |> Async.RunSynchronously
 
 (compressor :> ICompressor).Decompress
-    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\output\Autumncame.mp3.rle"
-    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\input\Autumncame.mp3_dec.mp3" 
+    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\output\vid.mp4.huff"
+    @"C:\MyCodeSSD\f#\Archivitor\Archivitor\bin\Debug\net6.0\input\vid_dec.mp4" 
 |> Async.RunSynchronously

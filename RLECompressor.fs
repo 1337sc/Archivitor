@@ -60,6 +60,10 @@ type RLECompressor() =
                     
                 outputFile.WriteByte(cnt |> byte)
                 outputFile.WriteByte(prevC |> byte)
+
+                let rate = Math.Round(100M * (1M - (outputFile.Length |> decimal) / (content.Length |> decimal)), 4)
+
+                Console.WriteLine($"\t\tCompression rate: {rate}%%")
             }
 
         member this.Decompress path resultPath = 
